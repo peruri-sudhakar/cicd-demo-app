@@ -1,0 +1,9 @@
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#f6f7fb;color:#111}
+.container{max-width:980px;margin:0 auto;padding:18px}
+.card{background:#fff;border:1px solid #e6e6ef;border-radius:16px;padding:18px;box-shadow:0 8px 18px rgba(0,0,0,.04)}
+.nav{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px}
+.nav a{text-decoration:none;color:#333;padding:8px 10px;border-radius:10px}
+.nav a:hover{background:#f0f1f6}
+.btn{padding:10px 14px;border-radius:12px;border:1px solid #d6d7e3;background:#111;color:#fff;cursor:pointer}
+.msg{margin-top:12px;font-weight:600}
