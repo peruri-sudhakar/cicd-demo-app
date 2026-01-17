@@ -1,1 +1,1 @@
-Welcom from Branch A
+Welcome from Branch B
