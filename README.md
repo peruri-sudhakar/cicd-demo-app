@@ -12,4 +12,3 @@ Open `index.html` in browser.
 Workflow file is inside:
 `.github/workflows/ci.yml`
 temp changes
-wrong line
