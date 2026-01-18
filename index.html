@@ -6,10 +6,12 @@
   <title>CI/CD Demo App</title>
   <link rel="stylesheet" href="assets/style.css"/>
 </head>
+
 <body>
   <header class="container">
     <h1>CI/CD Demo App</h1>
     <p>Static website project for Git + GitHub + GitHub Actions practice.</p>
+
     <nav class="nav">
       <a href="index.html">Home</a>
       <a href="about.html">About</a>
@@ -24,12 +26,87 @@
       <li>Git branching + PR</li>
       <li>GitHub Actions CI</li>
       <li>GitHub Pages deployment</li>
+      <li>Docker Compose + MySQL</li>
     </ul>
 
-    <button id="btn" class="btn">Run CI</button>
+    <button id="btn" class="btn">Click Me</button>
     <p id="msg" class="msg"></p>
+
+    <hr style="margin:20px 0;">
+
+    <button id="addUserBtn" class="btn">Add User Details</button>
+
+    <div id="userFormBox" style="display:none; margin-top:15px;">
+      <h3>Add User</h3>
+
+      <input type="text" id="name" placeholder="Enter Name"
+             style="padding:10px; width:100%; margin-bottom:10px;">
+
+      <input type="email" id="email" placeholder="Enter Email"
+             style="padding:10px; width:100%; margin-bottom:10px;">
+
+      <button id="submitUser" class="btn">Submit</button>
+
+      <p id="result" class="msg"></p>
+    </div>
   </main>
 
-  <script src="assets/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+      // Click Me button
+      const btn = document.getElementById("btn");
+      const msg = document.getElementById("msg");
+
+      btn.addEventListener("click", function () {
+        msg.textContent = "GitHub Actions CI is working ✅";
+      });
+
+      // Show form
+      const addUserBtn = document.getElementById("addUserBtn");
+      const userFormBox = document.getElementById("userFormBox");
+
+      addUserBtn.addEventListener("click", function () {
+        userFormBox.style.display = "block";
+      });
+
+      // Submit and save in DB
+      const submitUser = document.getElementById("submitUser");
+      const result = document.getElementById("result");
+
+      submitUser.addEventListener("click", async function () {
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+
+        if (name === "" || email === "") {
+          result.textContent = "Please enter Name and Email";
+          return;
+        }
+
+        try {
+          const response = await fetch("/api/save_user.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, email })
+          });
+
+          const data = await response.json();
+
+          if (data.status === "success") {
+            result.textContent = "✅ Saved in MySQL!";
+            document.getElementById("name").value = "";
+            document.getElementById("email").value = "";
+          } else {
+            result.textContent = "❌ " + data.message;
+          }
+
+        } catch (err) {
+          result.textContent = "❌ Backend not reachable";
+        }
+      });
+
+    });
+  </script>
+
 </body>
 </html>
